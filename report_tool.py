@@ -1,11 +1,10 @@
-import os
 from report_psgcon import question1, question2, question3
 
-def open_movies_page():
-    # Create or overwrite the output file
+def export_reports():
+    # Export the results from the DB to a file
     output_file = open('reportingtool_output.txt', 'w')
 
-    # Replace the movie tiles placeholder generated content
+    # Maintains questions and results format in a string
     rendered_content = '''1. What are the most popular three articles of all 
     time?\n'''
     rendered_content += "".join('''    %s -- %s views\n''' % ('"'+article+'"', 
@@ -20,16 +19,14 @@ def open_movies_page():
     
     rendered_content += '''\n3. On which days did more than 1% of requests lead 
     to errors?\n'''
-    rendered_content += "".join('''    %s -- %s %s errors\n''' % 
+    rendered_content += "".join('''    %s -- %.2f %s errors\n''' % 
                                 (time.strftime('%B %d, %Y'), errorpercent, "%")
                                 for time, errorpercent, errorcodes in 
                                 question3())
     
+    # write the string content in a file
     output_file.write(rendered_content)
     output_file.close()
 
-    # open the output file in the browser (in a new tab, if possible)
-    url = os.path.abspath(output_file.name)
-
 if __name__ == '__main__':
-    open_movies_page()
+    export_reports()

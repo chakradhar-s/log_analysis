@@ -1,4 +1,4 @@
-# Database code for the DB Forum, full solution!
+# Database code for the report tool
 
 import psycopg2, bleach
 
