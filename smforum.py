@@ -1,63 +1,26 @@
-#!/usr/bin/env python3
-# 
-# A buggy web service in need of a database.
+import os
+from testpsycopg2 import question1, question2, question3
 
-from flask import Flask, request, redirect, url_for
+def open_movies_page():
+    # Create or overwrite the output file
+    output_file = open('reportingtool_output.txt', 'w')
 
-from testpsycopg2 import get_posts, add_post
+    # Replace the movie tiles placeholder generated content
+    rendered_content = '''1. What are the most popular three articles of all time?\n'''
+    rendered_content += "".join('''    %s -- %s views\n''' % ('"'+article+'"', totalviews)for totalviews, article in question1())
+        
+    rendered_content += '''\n2. Who are the most popular article authors of all time?\n'''
+    rendered_content += "".join('''    %s -- %s views\n''' % (name, totalviews)for slug, totalviews, name in question2())
+    question2()
+    
+    rendered_content += '''\n3. On which days did more than 1% of requests lead to errors?\n'''
+    rendered_content += "".join('''    %s -- %s %s errors\n''' % (time.strftime('%B %d, %Y'), errorpercent, "%")for time, errorpercent, errorcodes in question3())
+    
+    output_file.write(rendered_content)
+    output_file.close()
 
-app = Flask(__name__)
-
-# HTML template for the forum page
-HTML_WRAP = '''\
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>DB Forum</title>
-    <style>
-      h1, form { text-align: center; }
-      textarea { width: 400px; height: 100px; }
-      div.post { border: 1px solid #999;
-                 padding: 10px 10px;
-                 margin: 10px 20%%; }
-      hr.postbound { width: 50%%; }
-      em.date { color: #999 }
-    </style>
-  </head>
-  <body>
-    <h1>DB Forum</h1>
-    <form method=post>
-      <div><textarea id="content" name="content"></textarea></div>
-      <div><button id="go" type="submit">Post message</button></div>
-    </form>
-    <!-- post content will go here -->
-%s
-  </body>
-</html>
-'''
-
-# HTML template for an individual comment
-POST = '''\
-    <div class=post><em class=date>%s</em><br>%s</div>
-    <div class=post><p>%s</p></div>
-'''
-
-
-@app.route('/', methods=['GET'])
-def main():
-    '''Main page of the forum.'''
-    posts = "".join(POST % (time, errorpercent, errorcodes) for time, errorpercent, errorcodes in get_posts())
-    html = HTML_WRAP % posts
-    return html
-
-
-@app.route('/', methods=['POST'])
-def post():
-    '''New post submission.'''
-    message = request.form['content']
-    add_post(message)
-    return redirect(url_for('main'))
-
+    # open the output file in the browser (in a new tab, if possible)
+    url = os.path.abspath(output_file.name)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    open_movies_page()

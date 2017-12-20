@@ -4,7 +4,25 @@ import psycopg2, bleach
 
 DBNAME = "news"
 
-def get_posts():
+def question1():
+    """Return all posts from the 'database', most recent first."""
+    db = psycopg2.connect(database=DBNAME)
+    c = db.cursor()
+    c.execute("select count(path) totalviews, substring(path from '([a-zA-z\-]+)$') article from log where status similar to '(2|3)%' group by path having path like '%/article%' order by totalviews desc limit 3")
+    posts = c.fetchall()
+    db.close()
+    return posts
+
+def question2():
+    """Return all posts from the 'database', most recent first."""
+    db = psycopg2.connect(database=DBNAME)
+    c = db.cursor()
+    c.execute("select ar.slug, dt.total totalviews,au.name from authors au, articles ar,(select count(path) total, path,substring(path from '([a-zA-z\-]+)$') as sub from log group by path having path like '%/article%' order by total desc) dt  where au.id=ar.author and dt.sub=ar.slug")
+    posts = c.fetchall()
+    db.close()
+    return posts
+
+def question3():
     """Return all posts from the 'database', most recent first."""
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
@@ -13,10 +31,3 @@ def get_posts():
     db.close()
     return posts
 
-def add_post(content):
-    """Add a post to the 'database' with the current timestamp."""
-    db = psycopg2.connect(database=DBNAME)
-    c = db.cursor()
-    c.execute("insert into posts values (%s)", (bleach.clean(content),))  # good
-    db.commit()
-    db.close()
