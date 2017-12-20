@@ -27,7 +27,7 @@ def export_reports():
     if(len(solution2) > 0): 
         rendered_content += "".join('''    %s -- %s views\n''' 
                                     % (name, totalviews) 
-                                    for slug, totalviews, name in solution2)
+                                    for count, totalviews, name in solution2)
     else:
         rendered_content += "No data was found.\n"
 

@@ -32,11 +32,11 @@ def question2():
     try:
         db = psycopg2.connect(database=DBNAME)
         c = db.cursor()
-        c.execute('''select ar.slug, dt.total totalviews,au.name from authors au, 
+        c.execute('''select count(ar.slug), SUM(dt.total) as totalviews,au.name from authors au, 
         articles ar,(select count(path) total, path,
         substring(path from '([a-zA-z\-]+)$') as sub from log group by path 
         having path like '%/article%' order by total desc) dt  
-        where au.id=ar.author and dt.sub=ar.slug''')
+        where au.id=ar.author and dt.sub=ar.slug group by au.id''')
         posts = c.fetchall()
         db.close()
         return posts
