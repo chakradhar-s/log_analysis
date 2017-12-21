@@ -8,7 +8,7 @@ Clone the repo to your pre-installed and appropriate vagrant location carefully.
 git clone https://github.com/chakradhar-s/log_analysis.git
 ```
 ## Prerequisites needed technologies to run scripts
-Python with any version 2.x and 3.x.
+Python with any version 2.x.
 
 Data was loaded by runing psql -d news -f newsdata.sql on a postgre server.
 

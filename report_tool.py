@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 import os
 from report_psgcon import question1, question2, question3
@@ -13,32 +13,32 @@ def export_reports():
     solution3 = question3()
 
 # Maintains questions and results format in a string
-    rendered_content = '''1. What are the most popular three articles of all 
+    rendered_content = '''1. What are the most popular three articles of all
     time?\n'''
     if(len(solution1) > 0):
-        rendered_content += "".join('''    %s -- %s views\n''' 
-                                    % ('"'+article+'"', totalviews)
+        rendered_content += "".join('''    %s -- %s views\n'''
+                                    % ('"' + article + '"', totalviews)
                                     for totalviews, article in solution1)
     else:
         rendered_content += "No data was found.\n"
 
-    rendered_content += '''\n2. Who are the most popular article authors of all 
+    rendered_content += '''\n2. Who are the most popular article authors of all
     time?\n'''
-    if(len(solution2) > 0): 
-        rendered_content += "".join('''    %s -- %s views\n''' 
-                                    % (name, totalviews) 
+    if(len(solution2) > 0):
+        rendered_content += "".join('''    %s -- %s views\n'''
+                                    % (name, totalviews)
                                     for count, totalviews, name in solution2)
     else:
         rendered_content += "No data was found.\n"
 
-    rendered_content += '''\n3. On which days did more than 1% of requests lead 
+    rendered_content += '''\n3. On which days did more than 1% of requests lead
     to errors?\n'''
     if(len(solution3) > 0):
-        rendered_content += "".join('''    %s -- %.2f %s errors\n''' 
-                                    % (time.strftime('%B %d, %Y'), 
-                                       errorpercent, 
-                                       "%") 
-                                    for time, errorpercent, errorcodes 
+        rendered_content += "".join('''    %s -- %.2f %s errors\n'''
+                                    % (time.strftime('%B %d, %Y'),
+                                       errorpercent,
+                                       "%")
+                                    for time, errorpercent
                                     in solution3)
     else:
         rendered_content += "No data was found.\n"
