@@ -8,7 +8,7 @@ Clone the repo to your pre-installed and appropriate vagrant location carefully.
 git clone https://github.com/chakradhar-s/log_analysis.git
 ```
 ## Prerequisites needed technologies to run scripts
-Python with any version 2.x and 3.x.
+Python with version 2.x.
 
 [Instructions to setup vagrant environment and run vagrant are on](https://classroom.udacity.com/nanodegrees/nd004/parts/8d3e23e1-9ab6-47eb-b4f3-d5dc7ef27bf0/modules/bc51d967-cb21-46f4-90ea-caf73439dc59/lessons/5475ecd6-cfdb-4418-85a2-f2583074c08d/concepts/14c72fe3-e3fe-4959-9c4b-467cf5b7c3a0)
 
