@@ -24,3 +24,6 @@ Run the script to create a report file
 python report_tool.py
 ```
 After the script was run successfully an acknowledgement, which tells a location of the output file, is displayed.
+
+# Notes 
+The code may run on python 3.X
